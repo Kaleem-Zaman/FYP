@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "560039965795",
+    "project_id": "fyp-dcs",
+    "storage_bucket": "fyp-dcs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560039965795:android:94abaa71d41e6866eff456",
+        "android_client_info": {
+          "package_name": "com.kaleem.fyp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560039965795-e6425kdld8gvjqaga5acl2eu2vqt3pki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5rep28n9FKAD8cVBw0RqlkUK9keaSi1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560039965795-e6425kdld8gvjqaga5acl2eu2vqt3pki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
