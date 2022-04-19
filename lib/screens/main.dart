@@ -29,7 +29,6 @@ class Root extends StatelessWidget {
         SignUpScreen.id: (context) => SignUpScreen(),
         SignInScreen.id: (context) => SignInScreen(),
         ViewRequestsScreen.id: (context) => ViewRequestsScreen(),
-        RequestDetails.id: (context) => RequestDetails(),
         PreviousRecord.id: (context) => PreviousRecord(),
       }
     );

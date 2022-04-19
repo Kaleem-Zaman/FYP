@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 class RequestDetails extends StatefulWidget {
-  static const id = "request_details";
-
-  const RequestDetails({Key? key}) : super(key: key);
+  String po_number;
+  String party_name;
+  String length;
+  String quality;
+  String status;
+  String id;
+  RequestDetails(
+      {Key? key,
+      required this.po_number,
+      required this.party_name,
+      required this.length,
+      required this.quality,
+      required this.status,
+      required this.id})
+      : super(key: key);
 
   @override
   _RequestDetailsState createState() => _RequestDetailsState();
@@ -12,6 +26,7 @@ class RequestDetails extends StatefulWidget {
 
 class _RequestDetailsState extends State<RequestDetails> {
   final _fs = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +39,8 @@ class _RequestDetailsState extends State<RequestDetails> {
         ),
         body: StreamBuilder(
           stream: _fs.collection('batchData').snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -33,11 +49,14 @@ class _RequestDetailsState extends State<RequestDetails> {
             return ListView(
               children: snapshot.data!.docs.map((document) {
                 return Center(
-                  child: ShowRequestDetailWidget(poNum: document['PO'],
-                    party: document['Party'],
-                    length: document['Length'],
-                    quality: document['Quality'],
-                    department: document['Department'],),
+                  child: ShowRequestDetailWidget(
+                    poNum: widget.po_number,
+                    party: widget.party_name,
+                    length: widget.length,
+                    quality: widget.quality,
+                    status: widget.status,
+                    id: widget.id,
+                  ),
                 );
               }).toList(),
             );
@@ -49,15 +68,16 @@ class _RequestDetailsState extends State<RequestDetails> {
 }
 
 class ShowRequestDetailWidget extends StatelessWidget {
-  dynamic poNum, party, length, quality, department;
-  ShowRequestDetailWidget(
-      {Key? key,
-      required this.poNum,
-      required this.party,
-      required this.length,
-      required this.quality,
-      required this.department})
-      : super(key: key);
+  dynamic poNum, party, length, quality, status, id;
+  ShowRequestDetailWidget({
+    Key? key,
+    required this.poNum,
+    required this.party,
+    required this.length,
+    required this.quality,
+    required this.status,
+    required this.id
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +95,12 @@ class ShowRequestDetailWidget extends StatelessWidget {
             ]),
         margin: EdgeInsets.all(25),
         padding: EdgeInsets.all(10),
-        height: 300,
+        height: 320,
         child: Column(
           children: [
             Table(
               border: TableBorder.all(color: Colors.white),
-              children:  [
+              children: [
                 TableRow(children: [
                   Padding(
                     padding: EdgeInsets.all(8.0),
@@ -96,7 +116,7 @@ class ShowRequestDetailWidget extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "$poNum",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   )
                 ]),
@@ -115,7 +135,7 @@ class ShowRequestDetailWidget extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "$party",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   )
                 ]),
@@ -134,7 +154,7 @@ class ShowRequestDetailWidget extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "$length",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   )
                 ]),
@@ -153,7 +173,7 @@ class ShowRequestDetailWidget extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "$quality",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   )
                 ]),
@@ -161,7 +181,7 @@ class ShowRequestDetailWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Department",
+                      "Status",
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -171,8 +191,8 @@ class ShowRequestDetailWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "$department",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      "$status",
+                      style: TextStyle(fontSize: 15, color: Colors.redAccent),
                     ),
                   )
                 ]),
@@ -188,7 +208,31 @@ class ShowRequestDetailWidget extends StatelessWidget {
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.redAccent)),
-                  onPressed: () {},
+                  onPressed: () async {
+                    DocumentReference docref = FirebaseFirestore.instance
+                        .collection("requests")
+                        .doc("$id");
+                    Map<String, dynamic> docMap = ({
+                      "Status": "DENY",
+                    });
+                    DocumentSnapshot snap = await docref.get();
+                    if (snap.exists) {
+                      await docref.update(docMap);
+                      MotionToast.delete(
+                        description: Text("Status has been set to: DENY"),
+                        borderRadius: 5,
+                        title: Text("User Update"),
+                      ).show(context);
+                    }
+                    else{
+                      MotionToast.error(
+                        description: Text("Some error occurred while updating the status! Please check you are connected to the internet and try again!"),
+                        borderRadius: 5,
+                        title: Text("User Update"),
+                      ).show(context);
+                    }
+
+                  },
                   child: Text("Deny"),
                 ),
                 SizedBox(
@@ -198,7 +242,31 @@ class ShowRequestDetailWidget extends StatelessWidget {
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.lightGreen)),
-                  onPressed: () {},
+                  onPressed: () async {
+                    DocumentReference docref = FirebaseFirestore.instance
+                        .collection("requests")
+                        .doc("$id");
+                    Map<String, dynamic> docMap = ({
+                      "Status": "ALLOW",
+                    });
+                    DocumentSnapshot snap = await docref.get();
+                    if (snap.exists) {
+                      await docref.update(docMap);
+                      MotionToast.success(
+                        description: Text("Status has been set to: ALLOW"),
+                        borderRadius: 5,
+                        title: Text("User Update"),
+                      ).show(context);
+                    }
+                    else{
+                      MotionToast.error(
+                        description: Text("Some error occurred while updating the status! Please check you are connected to the internet and try again!"),
+                        borderRadius: 5,
+                        title: Text("User Update"),
+                      ).show(context);
+                    }
+
+                  },
                   child: Text("Allow"),
                 )
               ],
