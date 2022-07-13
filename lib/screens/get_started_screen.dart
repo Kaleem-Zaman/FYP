@@ -14,8 +14,6 @@ class GetStartedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return SafeArea(
       child: Scaffold(
           body: Center(
@@ -54,7 +52,7 @@ class GetStartedScreen extends StatelessWidget {
                      ),
                      child: FlatButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, SignInScreen.id);
+                            Navigator.of(context).pushNamedAndRemoveUntil(SignInScreen.id, (route) => false);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -76,7 +74,7 @@ class GetStartedScreen extends StatelessWidget {
                     child: FlatButton(
                       onPressed: () {
                         // CHANGES MADE HERE
-                        Navigator.pushNamed(context, SignUpScreen.id);
+                        Navigator.of(context).pushNamedAndRemoveUntil(SignUpScreen.id, (route) => false);
 
                       },
                       child: Row(

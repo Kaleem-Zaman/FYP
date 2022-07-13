@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp/backend%20services/authentication_service.dart';
 import 'package:fyp/backend%20services/firebaseAuthService.dart';
 import 'package:fyp/screens/previous_record.dart';
 import "sign_in_screen.dart";
@@ -16,7 +17,7 @@ class ViewRequestsScreen extends StatefulWidget {
 }
 
 class _ViewRequestsScreenState extends State<ViewRequestsScreen> {
-
+  AuthService auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -108,6 +109,7 @@ class _ViewRequestsScreenState extends State<ViewRequestsScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      auth.logout();
                       Navigator.of(context).pushNamedAndRemoveUntil(SignInScreen.id, (route) => false);
                     },
                     child: const ListTile(

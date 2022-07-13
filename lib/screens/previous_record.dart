@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp/backend%20services/authentication_service.dart';
+import 'package:fyp/screens/sign_in_screen.dart';
 import 'package:fyp/screens/view_requests.dart';
 import '../custom widgets/record_table.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +15,7 @@ class PreviousRecord extends StatefulWidget {
 }
 
 class _PreviousRecordState extends State<PreviousRecord> {
+  AuthService auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -93,13 +96,19 @@ class _PreviousRecordState extends State<PreviousRecord> {
                 const SizedBox(
                   height: 10,
                 ),
-                const ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    color: Colors.white,
+                GestureDetector(
+                  onTap: (){
+                    auth.logout();
+                    Navigator.of(context).pushNamedAndRemoveUntil(SignInScreen.id, (route) => false);
+                  },
+                  child: const ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    title:
+                        Text("Sign Out", style: TextStyle(color: Colors.white)),
                   ),
-                  title:
-                      Text("Sign Out", style: TextStyle(color: Colors.white)),
                 )
               ],
             ),

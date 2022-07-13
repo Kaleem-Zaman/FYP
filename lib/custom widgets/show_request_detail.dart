@@ -5,6 +5,7 @@ import 'package:fyp/backend%20services/auth_class.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:get/get.dart';
 import 'package:motion_toast/resources/arrays.dart';
 
 class ShowRequestDetailWidget extends StatelessWidget {
@@ -225,9 +226,12 @@ class ShowRequestDetailWidget extends StatelessWidget {
                       )
                     ]
                   ),
-                  child: FlatButton(
+                  child: ElevatedButton(
 
-                    textColor: Colors.white,
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.resolveWith((states) => 0),
+                      backgroundColor: MaterialStateColor.resolveWith((states) => Colors.green)
+                    ),
                     onPressed: () async {
                       //this list packs up snap, document ref, and new map returned from the function
                       List info =
@@ -266,6 +270,7 @@ class ShowRequestDetailWidget extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
+
                 Container(
                   margin: EdgeInsets.only(left: 15, right: 15),
                   padding: EdgeInsets.all(10),
@@ -282,9 +287,12 @@ class ShowRequestDetailWidget extends StatelessWidget {
                         )
                       ]
                   ),
-                  child: FlatButton(
+                  child: ElevatedButton(
 
-                    textColor: Colors.white,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith((states) => Colors.red),
+                      elevation: MaterialStateProperty.resolveWith((states) => 0)
+                    ),
                     onPressed: () async {
                       List requestInfo =
                       await authDispatch.updateRequestStatus(id, "DENY");
@@ -308,6 +316,8 @@ class ShowRequestDetailWidget extends StatelessWidget {
                           onClose: () => Navigator.pop(context),
                         ).show(context);
                       }
+
+
                     },
                     child: Text(
                       "DENY",
