@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/backend%20services/firebaseAuthService.dart';
 import 'package:fyp/screens/previous_record.dart';
+import "sign_in_screen.dart";
 import 'package:fyp/custom widgets/request_tile.dart';
 import 'package:fyp/screens/sign_in_screen.dart';
 
@@ -107,7 +108,7 @@ class _ViewRequestsScreenState extends State<ViewRequestsScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      //context.read<AuthenticationService>().signOut();
+                      Navigator.of(context).pushNamedAndRemoveUntil(SignInScreen.id, (route) => false);
                     },
                     child: const ListTile(
                       leading: Icon(
