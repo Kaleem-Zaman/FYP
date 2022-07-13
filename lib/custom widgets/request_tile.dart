@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:fyp/screens/request_details.dart';
 import 'package:status_alert/status_alert.dart';
+
 class RequestTile extends StatelessWidget {
   String po_number;
-  String party_name, length, quality, status, id;
+  String party_name,
+      length,
+      quality,
+      status,
+      amount,
+      customerStatus,
+      paymentPercentage,
+      id;
   RequestTile(
       {Key? key,
-        required this.po_number,
-        required this.party_name,
-        required this.quality,
-        required this.length,
-        required this.status,
-        required this.id})
+      required this.po_number,
+      required this.party_name,
+      required this.quality,
+      required this.length,
+      required this.status,
+      required this.amount,
+      required this.customerStatus,
+      required this.paymentPercentage,
+      required this.id})
       : super(key: key);
 
   @override
@@ -63,25 +74,28 @@ class RequestTile extends StatelessWidget {
                           fontWeight: FontWeight.bold)),
                   TextSpan(
                       text: " $party_name",
-                      style: const TextStyle(fontSize: 20, color: Colors.white)),
+                      style:
+                          const TextStyle(fontSize: 20, color: Colors.white)),
                 ]),
               )
             ],
           ),
           ElevatedButton(
-            onPressed: ()  {
-
+            onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => RequestDetails(
-                        po_number: po_number,
-                        party_name: party_name,
-                        length: length,
-                        quality: quality,
-                        status: status,
-                        id: id,
-                      )));
+                            po_number: po_number,
+                            party_name: party_name,
+                            length: length,
+                            quality: quality,
+                            status: status,
+                            amount: amount,
+                            customerStatus: customerStatus,
+                            paymentPercentage: paymentPercentage,
+                            id: id,
+                          )));
             },
             child: Row(
               children: const [
@@ -96,7 +110,6 @@ class RequestTile extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all(
                     const Color.fromRGBO(106, 125, 155, 10))),
           ),
-
         ],
       ),
     );

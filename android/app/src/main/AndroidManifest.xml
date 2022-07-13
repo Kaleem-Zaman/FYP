@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kaleem.fyp">
    <application
-        android:label="fyp"
+        android:label="Dispatch Control"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

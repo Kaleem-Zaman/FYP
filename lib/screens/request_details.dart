@@ -9,6 +9,8 @@ class RequestDetails extends StatefulWidget {
   String quality;
   String status;
   String id;
+  String amount;
+  String customerStatus, paymentPercentage;
   RequestDetails(
       {Key? key,
       required this.po_number,
@@ -16,6 +18,9 @@ class RequestDetails extends StatefulWidget {
       required this.length,
       required this.quality,
       required this.status,
+      required this.amount,
+      required this.customerStatus,
+      required this.paymentPercentage,
       required this.id})
       : super(key: key);
 
@@ -30,6 +35,7 @@ class _RequestDetailsState extends State<RequestDetails> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Active Requests"),
@@ -54,6 +60,9 @@ class _RequestDetailsState extends State<RequestDetails> {
                     length: widget.length,
                     quality: widget.quality,
                     status: widget.status,
+                    amount: widget.amount,
+                    customerStatus: widget.customerStatus,
+                    paymentPercentage: widget.paymentPercentage,
                     id: widget.id,
                   ),
                 );
@@ -65,5 +74,3 @@ class _RequestDetailsState extends State<RequestDetails> {
     );
   }
 }
-
-
