@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/backend%20services/authentication_service.dart';
 import 'package:fyp/backend%20services/firebaseAuthService.dart';
 import 'package:fyp/screens/previous_record.dart';
+import 'package:fyp/screens/reports_screen.dart';
 import "sign_in_screen.dart";
 import 'package:fyp/custom widgets/request_tile.dart';
 import 'package:fyp/screens/sign_in_screen.dart';
@@ -55,7 +56,7 @@ class _ViewRequestsScreenState extends State<ViewRequestsScreen> {
                           height: 5,
                         ),
                         Text(
-                          "owner@gmail.com",
+                          "Owner AB Textiles",
                           style: TextStyle(color: Colors.white),
                         ),
                         SizedBox(
@@ -106,6 +107,19 @@ class _ViewRequestsScreenState extends State<ViewRequestsScreen> {
                   ),
                   const SizedBox(
                     height: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Reports.id);
+                    },
+                    child: const ListTile(
+                      leading: Icon(
+                        Icons.data_usage,
+                        color: Colors.white,
+                      ),
+                      title: Text("Reports",
+                          style: TextStyle(color: Colors.white)),
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {

@@ -52,7 +52,7 @@ class GetStartedScreen extends StatelessWidget {
                      ),
                      child: FlatButton(
                           onPressed: () {
-                            Navigator.of(context).pushNamedAndRemoveUntil(SignInScreen.id, (route) => false);
+                            Navigator.of(context).pushNamed(SignInScreen.id);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +74,7 @@ class GetStartedScreen extends StatelessWidget {
                     child: FlatButton(
                       onPressed: () {
                         // CHANGES MADE HERE
-                        Navigator.of(context).pushNamedAndRemoveUntil(SignUpScreen.id, (route) => false);
+                        Navigator.of(context).pushNamed(SignUpScreen.id);
 
                       },
                       child: Row(

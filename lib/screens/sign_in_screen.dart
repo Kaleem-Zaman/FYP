@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/backend%20services/authentication_service.dart';
 import 'package:fyp/backend%20services/firebaseAuthService.dart';
 import 'package:fyp/screens/view_requests.dart';
+import 'package:get/get.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 
@@ -16,7 +17,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   String? email, password; // credentials
-
+  AuthService auth = AuthService();
   void checkCredentials() {
     if (email == null || password == null || email == "" || password == "") {
       MotionToast.error(
@@ -106,21 +107,27 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: const Text(
                   "Sign In",
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               )),
-          Center(
-            child: RichText(
-                text: const TextSpan(children: [
-              TextSpan(
-                  text: "Don't have an account?",
-                  style: TextStyle(color: Colors.white)),
-              TextSpan(
-                  text: " Sign Up!",
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                  ))
-            ])),
+          TextButton(
+              onPressed: (){
+                Get.defaultDialog(
+                  title: "Verification Email",
+                  middleText: "Are you sure to reset password?\nAn email with a code will be sent to you",
+                  textConfirm: "Yes",
+                  confirmTextColor: Colors.white,
+                  textCancel: "No",
+                  onConfirm: (){
+                      auth.forgotPassword(email, context);
+                      Navigator.pop(context);
+                  },
+                  onCancel: (){
+                    Navigator.of(context).pop();
+                  }
+                );
+              },
+              child: const Text("Forgot Password?", style: TextStyle(color: Colors.white),),
           )
         ],
       ),

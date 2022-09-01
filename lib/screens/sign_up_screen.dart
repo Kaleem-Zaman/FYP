@@ -119,22 +119,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: const Text(
                       "Sign Up",
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   )),
-              Center(
-                child: RichText(
-                    text: const TextSpan(children: [
-                  TextSpan(
-                      text: "Already have an account?",
-                      style: TextStyle(color: Colors.white)),
-                  TextSpan(
-                      text: " Sign In!",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      ))
-                ])),
-              ),
+
             ])));
   }
 }
